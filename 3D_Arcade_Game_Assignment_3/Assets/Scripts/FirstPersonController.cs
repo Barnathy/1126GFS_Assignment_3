@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.AI;
 
 public class FirstPersonController : MonoBehaviour
 {
     public float moveSpeed = 5f; // stores walking movement speed
-    public float mouseSensitivity = 5f;
+    public float mouseSensitivity = 3f;
     //public float gravity = -10f; //keeps player from moving up when coliding with objects
 
     public Transform cameraTransform;
@@ -12,12 +13,24 @@ public class FirstPersonController : MonoBehaviour
     //private Vector3 velocity
     private float xRotation = 0f;
     private CharacterController controller;
+    private UnityEngine.AI.NavMeshAgent agent;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("Player collided with Enemy");
+            // Handle player collision with enemy here
+        }
+    }
 
     void Start()
     {
 
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
+          
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        Debug.Log(agent.isOnNavMesh);
     }
 
     // Update is called once per frame
