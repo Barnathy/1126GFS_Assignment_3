@@ -7,7 +7,7 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     public float chaseDistance = 10f;
 
-    public NavMeshAgent agent;
+    private NavMeshAgent agent;
 
 
     void Start()
@@ -31,4 +31,15 @@ public class EnemyAI : MonoBehaviour
             agent.SetDestination(player.position);
         }
     }
-}
+    
+    private void OnTriggerEnter(Collider other)
+        {
+        if (other.CompareTag("Exit"))
+            {
+                Debug.Log("Enemy destroyed");
+                Destroy(gameObject);
+            }
+        }
+    }
+
+

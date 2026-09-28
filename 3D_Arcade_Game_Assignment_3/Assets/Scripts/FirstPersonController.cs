@@ -106,6 +106,11 @@ public class FirstPersonController : MonoBehaviour
                 SceneManager.LoadScene("GameOver"); // load the GameOver scene
             }
         }
+        if (other.CompareTag("Exit"))
+        {
+            Debug.Log("You Win!"); // log win message
+            //SceneManager.LoadScene("Win"); // load the Win scene
+        }
     }
 
 }
