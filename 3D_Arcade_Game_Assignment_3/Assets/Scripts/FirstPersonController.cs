@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.AI;
+using UnityEngine.UI;
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -12,23 +13,29 @@ public class FirstPersonController : MonoBehaviour
     public int currentHealth;
 
     public Transform cameraTransform;
-
+    public Slider healthBar; //reference to the UI Slider component that represents the player's health bar
     //private Vector3 velocity
     private float xRotation = 0f;
+
+    private int collisionCount = 0; // counter for the number of collisions with enemies
     private CharacterController controller;
     private UnityEngine.AI.NavMeshAgent agent;
-    private int collisionCount = 0; // counter for the number of collisions with enemies
+    
+    
 
     void Start() // Start is called before the first frame update
     {   
         // sets the current health to the maximum health at the start of the game
         currentHealth = maxHealth;
+        healthBar.value = currentHealth;
 
         // below line is used to get the CharacterController component attached to the player object
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
           
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+        //healthBar = GetComponent<Slider>();
         //Debug.Log(agent.isOnNavMesh); //checking if the player is on the navmesh, returns true
     }
 
@@ -89,7 +96,7 @@ public class FirstPersonController : MonoBehaviour
             //Debug.Log("Player collided with Enemy");
             collisionCount++;
             Debug.Log("Current Health: " + currentHealth); // log the player's current health
-           
+            healthBar.value = currentHealth;
         }
     }
 
