@@ -6,7 +6,10 @@ public class FirstPersonController : MonoBehaviour
 {
     public float moveSpeed = 5f; // stores walking movement speed
     public float mouseSensitivity = 3f;
-    //public float gravity = -10f; //keeps player from moving up when coliding with objects
+    //public float gravity = -10f; //keeps player from moving up when coliding with objects - used NavMeshAgent instead
+    public int minHealth = 0; // minimum health value
+    public int maxHealth = 100; // maximum health value
+    public int currentHealth;
 
     public Transform cameraTransform;
 
@@ -14,27 +17,23 @@ public class FirstPersonController : MonoBehaviour
     private float xRotation = 0f;
     private CharacterController controller;
     private UnityEngine.AI.NavMeshAgent agent;
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            Debug.Log("Player collided with Enemy");
-            // Handle player collision with enemy here
-        }
-    }
+    private int collisionCount = 0; // counter for the number of collisions with enemies
 
-    void Start()
-    {
+    void Start() // Start is called before the first frame update
+    {   
+        // sets the current health to the maximum health at the start of the game
+        currentHealth = maxHealth;
 
+        // below line is used to get the CharacterController component attached to the player object
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
           
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        Debug.Log(agent.isOnNavMesh);
+        //Debug.Log(agent.isOnNavMesh); //checking if the player is on the navmesh, returns true
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    void Update()// Update is called once per frame
     {
         Move();
         Look();
@@ -68,7 +67,7 @@ public class FirstPersonController : MonoBehaviour
         controller.Move(move.normalized * moveSpeed * Time.deltaTime);
     }
     
-    void Look()
+    void Look() // handles the player's camera rotation based on mouse movement
     {
         Vector2 mouseDelta = Mouse.current.delta.ReadValue();
 
@@ -82,4 +81,16 @@ public class FirstPersonController : MonoBehaviour
 
         transform.Rotate(Vector3.up * mouseX);
     }
+        private void OnTriggerEnter(Collider other) //when the player collides with an enemy, this function is called
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            currentHealth -= 10; // reduce player's health by 10 when colliding with an enemy
+            //Debug.Log("Player collided with Enemy");
+            collisionCount++;
+            Debug.Log("Current Health: " + currentHealth); // log the player's current health
+           
+        }
+    }
+
 }
