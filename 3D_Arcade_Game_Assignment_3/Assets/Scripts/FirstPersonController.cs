@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class FirstPersonController : MonoBehaviour
 {
     public float moveSpeed = 5f; // stores walking movement speed
-    public float mouseSensitivity = 3f;
+    public float mouseSensitivity = 1f;
     //public float gravity = -10f; //keeps player from moving up when coliding with objects - used NavMeshAgent instead
 
 
@@ -106,11 +106,11 @@ public class FirstPersonController : MonoBehaviour
                 SceneManager.LoadScene("GameOver"); // load the GameOver scene
             }
         }
-        if (other.CompareTag("Exit"))
+        /*if (other.CompareTag("Exit"))
+        //StartCoroutine(WaitForSeconds(2));
         {
             Debug.Log("You Win!"); // log win message
-            //SceneManager.LoadScene("Win"); // load the Win scene
+            SceneManager.LoadScene("Win"); // load the Win scene*/
         }
-    }
 
 }

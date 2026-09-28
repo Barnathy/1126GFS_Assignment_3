@@ -5,6 +5,7 @@ public class EnemyAI : MonoBehaviour
 {
 
     public Transform player;
+    public float speed = 3f;
     public float chaseDistance = 10f;
 
     private NavMeshAgent agent;
