@@ -17,7 +17,7 @@ public class ExitController : MonoBehaviour
             winText.gameObject.SetActive(true); // call the function to enable the win text
 
 
-            StartCoroutine(LoadWinSceneAfterDelay(1f)); // start a coroutine to load the Win scene after a delay
+            StartCoroutine(LoadWinSceneAfterDelay(1.5f)); // start a coroutine to load the Win scene after a delay
         }
     }
 
